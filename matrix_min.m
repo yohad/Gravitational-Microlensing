@@ -1,30 +1,27 @@
-function [i, j, min_chi] = matrix_min(mat)
-    cursor = [1, 1];
-    [w, h] = size(mat);
-    min_chi = mat(cursor);
-    while true
-        prev = min_chi;
-        for k = 1:w
-            cur_tmp = mat(k, cursor(2));
-            if min_chi > cur_tmp
-                min_chi = cur_tmp;
-                cursor(1) = k;
-            end
-        end
-        
-        for k = 1:h
-            cur_tmp = mat(cursor(1), k);
-            if min_chi > cur_tmp
-                min_chi = cur_tmp;
-                cursor(2) = k;
-            end
-        end
-        if prev == min_chi
-            break;
-        end
-    end
+function [cursor, smallest] = matrix_min(mat)
+    sz = size(mat);
+    cursor = num2cell(ones(size(sz)));
+    smallest = mat(cursor{:});
+    prev = smallest;
 
-    i = cursor(1);
-    j = cursor(2);
+    while true
+        % Iterate over all dimensions
+        for dim = 1:length(cursor)
+            tmp_cursor = cursor;
+            % find minimum of current row
+            for i = 1:sz(dim)
+                tmp_cursor(dim) = {i};
+                current_value = mat(tmp_cursor{:});
+                if current_value  < smallest
+                    smallest = current_value;
+                    cursor(dim) = {i};
+                end
+            end
+        end
+    if prev == smallest
+        break
+    end
+    prev = smallest;
+    end
 end
 
