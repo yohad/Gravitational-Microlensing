@@ -11,19 +11,14 @@ sigma_m = data(:, 3);
 F = 10.^(0.4*(m_0-m));
 sigma_F = 10.^(0.4*(m_0-m)) * log(10) * 0.4 .* sigma_m;
 
-tau_range = linspace(49, 52, 100);
-u_min_range = linspace(0, 0.3, 100);
-T0_range = linspace(2360, 2380, 100);
+L = 100;
+tau_range = reshape(linspace(49, 52, L), 1, L);
+u_min_range = reshape(linspace(0, 0.2, L), 1, 1, L);
+T0_range = reshape(linspace(2365, 2375, L), 1, 1, 1, L);
 
-chi = zeros(length(tau_range), length(u_min_range), length(T0_range));
-for i = 1:length(tau_range)
-    for j = 1:length(u_min_range)
-        for k = 1:length(T0_range)
-            f = gen_func(t, T0_range(k), u_min_range(j), tau_range(i));
-            chi(i, j, k) = sum((F - f).^2 ./ sigma_F.^2);
-        end
-    end
-end
+f = gen_func(t, T0_range, u_min_range, tau_range);
+chi = squeeze(sum((F - f).^2 ./ sigma_F.^2));
+
 [cursor, dist] = matrix_min(chi);
 i = cursor(1);
 j = cursor(2);
@@ -39,6 +34,11 @@ plot(tf, f);
 errorbar(t, F, sigma_F, ".");
 hold off
 
+T0_range = squeeze(T0_range);
+u_min_range = squeeze(u_min_range);
+tau_range = squeeze(tau_range);
+
+figure
 subplot(1, 3, 1)
 hold on
 mat = squeeze(chi(i, :, :));
