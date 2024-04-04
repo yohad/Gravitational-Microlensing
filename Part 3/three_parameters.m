@@ -12,9 +12,9 @@ F = 10.^(0.4*(m_0-m));
 sigma_F = 10.^(0.4*(m_0-m)) * log(10) * 0.4 .* sigma_m;
 
 L = 100;
-tau_range = reshape(linspace(49, 52, L), 1, L);
-u_min_range = reshape(linspace(0, 0.2, L), 1, 1, L);
-T0_range = reshape(linspace(2365, 2375, L), 1, 1, 1, L);
+tau_range = reshape(linspace(48, 52, L), 1, L);
+u_min_range = reshape(linspace(0.1, 0.15, L), 1, 1, L);
+T0_range = reshape(linspace(2370, 2373, L), 1, 1, 1, L);
 
 f = gen_func(t, T0_range, u_min_range, tau_range);
 chi = squeeze(sum((F - f).^2 ./ sigma_F.^2));
