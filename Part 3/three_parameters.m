@@ -27,14 +27,20 @@ tau = tau_range(i);
 u_min = u_min_range(j);
 T0 = T0_range(k);
 
+t = t+t_offset;
+T0 = T0+t_offset;
 tf = linspace(t(1), t(end), 10000);
 f = gen_func(tf, T0, u_min, tau);
 hold on
-plot(tf, f);
 errorbar(t, F, sigma_F, ".");
+plot(tf, f);
+title("SMC-001");
+legend("Data", "Fitted Function");
+xlabel("T [JD]");
+ylabel("$\mu$", Interpreter="latex");
 hold off
 
-T0_range = squeeze(T0_range);
+T0_range = squeeze(T0_range) + t_offset;
 u_min_range = squeeze(u_min_range);
 tau_range = squeeze(tau_range);
 
@@ -44,6 +50,8 @@ hold on
 mat = squeeze(chi(i, :, :));
 contour(T0_range, u_min_range, mat - dist, [3.53, 6.25, 8.02, 11.3, 14.2, 21.1], ...
     "ShowText", "on");
+xlabel("T0 [JD]");
+ylabel("$u_{min}$", Interpreter="latex");
 hold off
 
 subplot(1, 3, 2)
@@ -51,6 +59,8 @@ hold on
 mat = squeeze(chi(:, j, :));
 contour(T0_range, tau_range, mat - dist, [3.53, 6.25, 8.02, 11.3, 14.2, 21.1], ...
     "ShowText", "on");
+xlabel("T0 [JD]");
+ylabel("$\tau [JD]$", Interpreter="latex");
 hold off
 
 subplot(1, 3, 3)
@@ -58,4 +68,6 @@ hold on
 mat = squeeze(chi(:, :, k));
 contour(u_min_range, tau_range, mat - dist, [3.53, 6.25, 8.02, 11.3, 14.2, 21.1], ...
     "ShowText", "on");
+xlabel("$u_{min}$", Interpreter="latex");
+ylabel("$\tau [JD]$", Interpreter="latex");
 hold off

@@ -9,7 +9,8 @@ bs = [];
 cs = [];
 dists = [];
 
-for i = 1:10000
+L = 10000;
+for i = 1:L
     [ys, ss] = generate(xs, a, b, c, sigma, 0.1);
     [a_new, b_new, c_new, dist] = fit(xs, ys, ss);
     as(end+1) = a_new;
@@ -22,23 +23,23 @@ figure
 subplot(3, 1, 1);
 histogram(as, 20);
 xlabel("$a$", Interpreter="latex");
-ylabel("occurrences");
-txt = sprintf("$a$ distribution with $\\sigma_a = %.3f$", std(as));
+ylabel("N");
+txt = sprintf("$a = %.3f \\pm %.3f$", mean(as), std(as) / sqrt(L));
 title(txt, Interpreter="latex");
 
 
 subplot(3, 1, 2);
 histogram(bs, 20);
 xlabel("$b$", Interpreter="latex");
-ylabel("occurrences");
-txt = sprintf("$b$ distribution with $\\sigma_b = %.3f$", std(bs));
+ylabel("N");
+txt = sprintf("$b = %.3f \\pm %.3f$", mean(bs), std(bs) / sqrt(L));
 title(txt, Interpreter="latex");
 
 subplot(3, 1, 3);
 histogram(cs, 20);
 xlabel("$c$", Interpreter="latex");
-ylabel("occurrences");
-txt = sprintf("$c$ distribution with $\\sigma_c = %.3f$", std(cs));
+ylabel("N");
+txt = sprintf("$c = %.3f \\pm %.3f$", mean(cs), std(cs) / sqrt(L));
 title(txt, Interpreter="latex");
 
 

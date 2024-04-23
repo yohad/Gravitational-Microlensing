@@ -15,10 +15,11 @@ sigma_F = 10.^(-0.4*ms) * log(10) * 0.4 .* sigma_m;
 
 hold on
 errorbar(ts+t_offset, Fs, sigma_F, ".");
-plot(ts+t_offset, poly(ts, a, b, c))
+fit_t = linspace(ts(1), ts(end), 300);
+plot(fit_t+t_offset, poly(fit_t, a, b, c))
 
-xlabel("Julian Day");
-ylabel("Radiative Flux")
+xlabel("T [JD]");
+ylabel("$\mu$", Interpreter="latex")
 title("Microlensing Event for SMC001")
 T0 = -b / (2*a) + t_offset;
 sprintf('T0: %f', T0)

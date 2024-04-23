@@ -31,7 +31,7 @@ fprintf("u_min: %f, tau: %f, chi^2: %d\n",...
 
 contour(tau_range, u_min_range, chi_mat - dist, [2.3, 4.61, 6.18, 9.21], ...
     "ShowText", "on");
-xlabel("$\tau$", Interpreter="latex");
+xlabel("$\tau [JD]$", Interpreter="latex");
 ylabel("$u_{min}$", Interpreter="latex");
 
 figure
